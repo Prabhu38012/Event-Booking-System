@@ -1,0 +1,52 @@
+# Server
+PORT=5000
+NODE_ENV=development
+
+# Database
+MONGODB_URI=mongodb://localhost:27017/event-booking
+# Or use MongoDB Atlas: mongodb+srv://username:password@cluster.mongodb.net/event-booking
+
+# JWT
+JWT_SECRET=your_super_secret_jwt_key_change_this_in_production_12345
+JWT_EXPIRE=7d
+JWT_COOKIE_EXPIRE=7
+
+# Redis (optional - can be left empty)
+REDIS_HOST=
+REDIS_PORT=
+REDIS_PASSWORD=
+
+# Stripe (optional - add real keys when ready)
+STRIPE_SECRET_KEY=sk_test_51placeholder
+STRIPE_WEBHOOK_SECRET=whsec_placeholder
+
+# Razorpay (optional - add real keys when ready)
+RAZORPAY_KEY_ID=rzp_test_placeholder
+RAZORPAY_KEY_SECRET=placeholder_secret
+
+# Cloudinary (optional - add real credentials when ready)
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+
+# Email (optional - configure when ready)
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASSWORD=your_app_password
+EMAIL_FROM_NAME=EventHub
+
+# Twilio SMS (optional - configure when ready)
+TWILIO_ACCOUNT_SID=your_account_sid
+TWILIO_AUTH_TOKEN=your_auth_token
+TWILIO_PHONE_NUMBER=+1234567890
+
+# Frontend URL
+FRONTEND_URL=http://localhost:5173
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
