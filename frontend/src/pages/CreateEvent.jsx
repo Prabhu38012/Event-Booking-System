@@ -5,7 +5,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { 
   Calendar, MapPin, Users, IndianRupee, Image, Tag, 
-  ChevronLeft, ChevronRight, Check, FileText
+  ChevronLeft, ChevronRight, Check, FileText, Sparkles
 } from 'lucide-react';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
@@ -91,53 +91,65 @@ const CreateEvent = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50 relative">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-96 h-96 bg-primary-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute top-40 right-10 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-20 left-1/2 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+      </div>
+
       {/* Header */}
-      <div className="bg-white border-b sticky top-16 z-30">
-        <div className="container mx-auto px-4 py-4">
+      <div className="bg-white/90 backdrop-blur-xl border-b border-gray-200 sticky top-0 z-40 shadow-sm">
+        <div className="container mx-auto px-4 py-5">
           <div className="flex items-center justify-between">
             <button
               onClick={() => navigate(-1)}
-              className="flex items-center text-gray-600 hover:text-gray-900"
+              className="flex items-center text-gray-600 hover:text-gray-900 font-medium group transition-all"
             >
-              <ChevronLeft className="w-5 h-5 mr-1" />
+              <ChevronLeft className="w-5 h-5 mr-1 group-hover:-translate-x-1 transition-transform" />
               Back
             </button>
-            <h1 className="text-xl font-bold">Create New Event</h1>
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-primary-600" />
+              <h1 className="text-xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
+                Create New Event
+              </h1>
+            </div>
             <div className="w-20" />
           </div>
         </div>
       </div>
 
       {/* Progress Steps */}
-      <div className="bg-white border-b">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-center">
+      <div className="bg-white/80 backdrop-blur-xl border-b border-gray-200 sticky top-[73px] z-30 shadow-sm">
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex items-center justify-center max-w-4xl mx-auto">
             {steps.map((s, index) => (
-              <div key={s.number} className="flex items-center">
-                <div className="flex flex-col items-center">
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+              <div key={s.number} className="flex items-center flex-1">
+                <div className="flex flex-col items-center w-full">
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 shadow-lg ${
                     step > s.number 
-                      ? 'bg-green-500 text-white' 
+                      ? 'bg-gradient-to-br from-green-500 to-green-600 text-white scale-110' 
                       : step === s.number 
-                        ? 'bg-primary-600 text-white' 
+                        ? 'bg-gradient-to-br from-primary-600 to-primary-700 text-white scale-110' 
                         : 'bg-gray-200 text-gray-500'
                   }`}>
                     {step > s.number ? (
-                      <Check className="w-6 h-6" />
+                      <Check className="w-7 h-7" />
                     ) : (
-                      <s.icon className="w-6 h-6" />
+                      <s.icon className="w-7 h-7" />
                     )}
                   </div>
-                  <span className={`text-sm mt-2 font-medium ${
+                  <span className={`text-sm mt-3 font-semibold ${
                     step >= s.number ? 'text-gray-900' : 'text-gray-500'
                   }`}>
                     {s.title}
                   </span>
                 </div>
                 {index < steps.length - 1 && (
-                  <div className={`w-20 h-1 mx-2 rounded ${
-                    step > s.number ? 'bg-green-500' : 'bg-gray-200'
+                  <div className={`h-1.5 flex-1 mx-4 rounded-full transition-all duration-300 ${
+                    step > s.number ? 'bg-gradient-to-r from-green-500 to-green-600' : 'bg-gray-200'
                   }`} />
                 )}
               </div>
@@ -147,15 +159,15 @@ const CreateEvent = () => {
       </div>
 
       {/* Form */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-2xl mx-auto">
+      <div className="container mx-auto px-4 py-10 relative z-10">
+        <div className="max-w-3xl mx-auto">
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* Step 1: Basic Info */}
             {step === 1 && (
-              <div className="card animate-fade-in space-y-6">
-                <div>
-                  <h2 className="text-2xl font-bold mb-2">Basic Information</h2>
-                  <p className="text-gray-600">Tell us about your event</p>
+              <div className="card bg-white/90 backdrop-blur-xl border border-gray-200 shadow-xl animate-fade-in space-y-6">
+                <div className="pb-6 border-b border-gray-200">
+                  <h2 className="text-3xl font-bold mb-2 text-gray-900">Basic Information</h2>
+                  <p className="text-gray-600 text-lg">Tell us about your event</p>
                 </div>
 
                 <Input
@@ -167,24 +179,24 @@ const CreateEvent = () => {
                 />
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Description <span className="text-red-500">*</span>
                   </label>
                   <textarea
-                    className={`input-field h-32 resize-none ${errors.description ? 'border-red-500' : ''}`}
+                    className={`input-field h-40 resize-none ${errors.description ? 'border-red-500' : ''}`}
                     placeholder="Describe your event in detail..."
                     {...register('description', { required: 'Description is required' })}
                   />
                   {errors.description && (
-                    <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>
+                    <p className="text-red-500 text-sm mt-1 font-medium">{errors.description.message}</p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                  <label className="block text-sm font-semibold text-gray-700 mb-4">
                     Category <span className="text-red-500">*</span>
                   </label>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {categories.map(cat => (
                       <label key={cat.value} className="relative cursor-pointer">
                         <input
@@ -193,15 +205,15 @@ const CreateEvent = () => {
                           {...register('category', { required: 'Category is required' })}
                           className="peer sr-only"
                         />
-                        <div className="p-4 border-2 rounded-xl text-center peer-checked:border-primary-600 peer-checked:bg-primary-50 hover:bg-gray-50 transition-all">
-                          <span className="text-2xl">{cat.emoji}</span>
-                          <p className="font-medium mt-1">{cat.label}</p>
+                        <div className="p-5 border-2 border-gray-200 rounded-2xl text-center peer-checked:border-primary-600 peer-checked:bg-primary-50 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 shadow-sm hover:shadow-md">
+                          <span className="text-3xl block mb-2">{cat.emoji}</span>
+                          <p className="font-semibold text-gray-900">{cat.label}</p>
                         </div>
                       </label>
                     ))}
                   </div>
                   {errors.category && (
-                    <p className="text-red-500 text-sm mt-2">{errors.category.message}</p>
+                    <p className="text-red-500 text-sm mt-3 font-medium">{errors.category.message}</p>
                   )}
                 </div>
               </div>
@@ -209,13 +221,13 @@ const CreateEvent = () => {
 
             {/* Step 2: Date & Venue */}
             {step === 2 && (
-              <div className="card animate-fade-in space-y-6">
-                <div>
-                  <h2 className="text-2xl font-bold mb-2">Date & Venue</h2>
-                  <p className="text-gray-600">When and where is your event?</p>
+              <div className="card bg-white/90 backdrop-blur-xl border border-gray-200 shadow-xl animate-fade-in space-y-6">
+                <div className="pb-6 border-b border-gray-200">
+                  <h2 className="text-3xl font-bold mb-2 text-gray-900">Date & Venue</h2>
+                  <p className="text-gray-600 text-lg">When and where is your event?</p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid md:grid-cols-2 gap-5">
                   <Input
                     label="Start Date & Time"
                     type="datetime-local"
@@ -277,10 +289,10 @@ const CreateEvent = () => {
 
             {/* Step 3: Pricing */}
             {step === 3 && (
-              <div className="card animate-fade-in space-y-6">
-                <div>
-                  <h2 className="text-2xl font-bold mb-2">Pricing & Capacity</h2>
-                  <p className="text-gray-600">Set your ticket pricing</p>
+              <div className="card bg-white/90 backdrop-blur-xl border border-gray-200 shadow-xl animate-fade-in space-y-6">
+                <div className="pb-6 border-b border-gray-200">
+                  <h2 className="text-3xl font-bold mb-2 text-gray-900">Pricing & Capacity</h2>
+                  <p className="text-gray-600 text-lg">Set your ticket pricing</p>
                 </div>
 
                 <Input
@@ -294,10 +306,10 @@ const CreateEvent = () => {
                 />
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                  <label className="block text-sm font-semibold text-gray-700 mb-4">
                     Event Type <span className="text-red-500">*</span>
                   </label>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-5">
                     <label className="relative cursor-pointer">
                       <input
                         type="radio"
@@ -305,9 +317,9 @@ const CreateEvent = () => {
                         {...register('pricingType')}
                         className="peer sr-only"
                       />
-                      <div className="p-6 border-2 rounded-xl text-center peer-checked:border-green-500 peer-checked:bg-green-50 hover:bg-gray-50 transition-all">
-                        <div className="text-3xl font-bold text-green-600">FREE</div>
-                        <p className="text-gray-500 mt-1">No charge for tickets</p>
+                      <div className="p-8 border-2 border-gray-200 rounded-2xl text-center peer-checked:border-green-500 peer-checked:bg-green-50 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 shadow-md hover:shadow-lg">
+                        <div className="text-4xl font-bold text-green-600 mb-2">FREE</div>
+                        <p className="text-gray-600 font-medium">No charge for tickets</p>
                       </div>
                     </label>
                     <label className="relative cursor-pointer">
@@ -318,36 +330,38 @@ const CreateEvent = () => {
                         {...register('pricingType')}
                         className="peer sr-only"
                       />
-                      <div className="p-6 border-2 rounded-xl text-center peer-checked:border-primary-600 peer-checked:bg-primary-50 hover:bg-gray-50 transition-all">
-                        <div className="text-3xl font-bold text-primary-600">PAID</div>
-                        <p className="text-gray-500 mt-1">Charge for tickets</p>
+                      <div className="p-8 border-2 border-gray-200 rounded-2xl text-center peer-checked:border-primary-600 peer-checked:bg-primary-50 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 shadow-md hover:shadow-lg">
+                        <div className="text-4xl font-bold text-primary-600 mb-2">PAID</div>
+                        <p className="text-gray-600 font-medium">Charge for tickets</p>
                       </div>
                     </label>
                   </div>
                 </div>
 
                 {watchPricingType === 'paid' && (
-                  <Input
-                    label="Ticket Price (₹)"
-                    type="number"
-                    placeholder="Enter price per ticket"
-                    icon={IndianRupee}
-                    {...register('amount', { min: { value: 0, message: 'Price cannot be negative' } })}
-                  />
+                  <div className="animate-fade-in">
+                    <Input
+                      label="Ticket Price (₹)"
+                      type="number"
+                      placeholder="Enter price per ticket"
+                      icon={IndianRupee}
+                      {...register('amount', { min: { value: 0, message: 'Price cannot be negative' } })}
+                    />
+                  </div>
                 )}
               </div>
             )}
 
             {/* Step 4: Media */}
             {step === 4 && (
-              <div className="card animate-fade-in space-y-6">
-                <div>
-                  <h2 className="text-2xl font-bold mb-2">Additional Details</h2>
-                  <p className="text-gray-600">Add tags and images (optional)</p>
+              <div className="card bg-white/90 backdrop-blur-xl border border-gray-200 shadow-xl animate-fade-in space-y-6">
+                <div className="pb-6 border-b border-gray-200">
+                  <h2 className="text-3xl font-bold mb-2 text-gray-900">Additional Details</h2>
+                  <p className="text-gray-600 text-lg">Add tags and images (optional)</p>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     <div className="flex items-center gap-2">
                       <Tag className="w-4 h-4" />
                       Tags (comma separated)
@@ -359,23 +373,28 @@ const CreateEvent = () => {
                     placeholder="music, live, concert, weekend"
                     {...register('tags')}
                   />
-                  <p className="text-sm text-gray-500 mt-1">Help users find your event</p>
+                  <p className="text-sm text-gray-500 mt-2">Help users find your event</p>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
                     Event Image
                   </label>
-                  <div className="border-2 border-dashed rounded-xl p-8 text-center hover:border-primary-500 transition-colors cursor-pointer">
-                    <Image className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                    <p className="text-gray-600 mb-2">Drag and drop an image here</p>
-                    <p className="text-sm text-gray-500">or click to browse</p>
+                  <div className="border-2 border-dashed border-gray-300 rounded-2xl p-12 text-center hover:border-primary-500 hover:bg-primary-50/50 transition-all cursor-pointer group">
+                    <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-100 transition-colors">
+                      <Image className="w-8 h-8 text-gray-400 group-hover:text-primary-600 transition-colors" />
+                    </div>
+                    <p className="text-gray-700 font-semibold mb-2">Drag and drop an image here</p>
+                    <p className="text-sm text-gray-500">or click to browse (JPG, PNG up to 5MB)</p>
                   </div>
                 </div>
 
-                <div className="bg-blue-50 rounded-xl p-4">
-                  <h3 className="font-semibold text-blue-900 mb-2">📝 Review your event</h3>
-                  <p className="text-blue-700 text-sm">
+                <div className="bg-gradient-to-br from-blue-50 to-blue-100/50 border border-blue-200 rounded-2xl p-6">
+                  <h3 className="font-bold text-blue-900 mb-3 flex items-center gap-2 text-lg">
+                    <Check className="w-5 h-5" />
+                    Review your event
+                  </h3>
+                  <p className="text-blue-700 leading-relaxed">
                     Make sure all details are correct before publishing. You can edit your event later from the dashboard.
                   </p>
                 </div>
@@ -383,9 +402,16 @@ const CreateEvent = () => {
             )}
 
             {/* Navigation Buttons */}
-            <div className="flex items-center justify-between mt-6">
+            <div className="flex items-center justify-between mt-8 animate-fade-in animation-delay-200">
               {step > 1 ? (
-                <Button type="button" variant="outline" onClick={prevStep} leftIcon={<ChevronLeft className="w-5 h-5" />}>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={prevStep} 
+                  leftIcon={<ChevronLeft className="w-5 h-5" />}
+                  className="hover:bg-gray-100"
+                  size="lg"
+                >
                   Previous
                 </Button>
               ) : (
@@ -393,11 +419,23 @@ const CreateEvent = () => {
               )}
 
               {step < totalSteps ? (
-                <Button type="button" onClick={nextStep} rightIcon={<ChevronRight className="w-5 h-5" />}>
+                <Button 
+                  type="button" 
+                  onClick={nextStep} 
+                  rightIcon={<ChevronRight className="w-5 h-5" />}
+                  className="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 shadow-lg hover:shadow-xl"
+                  size="lg"
+                >
                   Continue
                 </Button>
               ) : (
-                <Button type="submit" loading={isSubmitting} rightIcon={<Check className="w-5 h-5" />}>
+                <Button 
+                  type="submit" 
+                  loading={isSubmitting} 
+                  rightIcon={<Check className="w-5 h-5" />}
+                  className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 shadow-lg hover:shadow-xl"
+                  size="lg"
+                >
                   Create Event
                 </Button>
               )}
@@ -405,6 +443,33 @@ const CreateEvent = () => {
           </form>
         </div>
       </div>
+
+      <style>{`
+        @keyframes blob {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(30px, -50px) scale(1.1); }
+          66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+        .animate-blob {
+          animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+        .animation-delay-200 {
+          animation-delay: 200ms;
+        }
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.6s ease-out forwards;
+        }
+      `}</style>
     </div>
   );
 };
