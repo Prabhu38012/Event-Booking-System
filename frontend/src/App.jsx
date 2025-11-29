@@ -15,6 +15,8 @@ import Checkout from './pages/Checkout';
 import BookingSuccess from './pages/BookingSuccess';
 import ProtectedRoute from './components/ProtectedRoute';
 import { loadUser } from './store/slices/authSlice';
+import Profile from './pages/Profile';
+import Settings from './pages/Settings';
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +44,8 @@ function App() {
           <Route path="create-event" element={<CreateEvent />} />
           <Route path="events/:id/edit" element={<EditEvent />} />
           <Route path="my-bookings" element={<MyBookings />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/settings" element={<Settings />} />
         </Route>
       </Route>
     </Routes>

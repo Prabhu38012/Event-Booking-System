@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { 
   Calendar, Users, Ticket, TrendingUp, Edit, Trash2, 
-  Plus, Eye, MoreVertical, ArrowUpRight, ArrowDownRight, Sparkles, BarChart3, MapPin
+  Plus, Eye, MapPin, ArrowUpRight, ArrowDownRight, Sparkles
 } from 'lucide-react';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import Button from '../components/ui/Button';
+import DashboardButton, { StatCard, DashboardButtonGrid } from '../components/ui/DashboardButton';
 import Badge from '../components/ui/Badge';
 import EmptyState from '../components/ui/EmptyState';
 import { EventCardSkeleton } from '../components/ui/Skeleton';
@@ -51,45 +52,6 @@ const Dashboard = () => {
     }
   };
 
-  const statCards = [
-    { 
-      label: 'Total Users', 
-      value: stats?.totalUsers || 0, 
-      icon: Users, 
-      color: 'bg-blue-500',
-      bgColor: 'bg-blue-50',
-      change: '+12%',
-      isPositive: true
-    },
-    { 
-      label: 'Total Events', 
-      value: stats?.totalEvents || 0, 
-      icon: Calendar, 
-      color: 'bg-green-500',
-      bgColor: 'bg-green-50',
-      change: '+8%',
-      isPositive: true
-    },
-    { 
-      label: 'Total Bookings', 
-      value: stats?.totalBookings || 0, 
-      icon: Ticket, 
-      color: 'bg-purple-500',
-      bgColor: 'bg-purple-50',
-      change: '+23%',
-      isPositive: true
-    },
-    { 
-      label: 'Revenue', 
-      value: `₹${stats?.totalRevenue || 0}`, 
-      icon: TrendingUp, 
-      color: 'bg-orange-500',
-      bgColor: 'bg-orange-50',
-      change: '+18%',
-      isPositive: true
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50 relative">
       {/* Animated Background Elements */}
@@ -123,8 +85,8 @@ const Dashboard = () => {
             </div>
             <Link to="/create-event" className="animate-fade-in animation-delay-200">
               <Button 
+                variant="glass"
                 size="lg"
-                className="bg-white text-primary-600 hover:bg-gray-100 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
                 leftIcon={<Plus className="w-5 h-5" />}
               >
                 Create Event
@@ -135,72 +97,72 @@ const Dashboard = () => {
       </div>
 
       <div className="container mx-auto px-4 py-10 relative z-10">
-        {/* Admin Stats */}
+        {/* Admin Stats - Using new StatCard component */}
         {user?.role === 'admin' && !statsLoading && (
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10 animate-fade-in">
-            {statCards.map((stat, index) => (
-              <div 
-                key={stat.label} 
-                className="card bg-white/80 backdrop-blur-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 border border-gray-100 group animate-fade-in"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <div className="flex items-start justify-between">
-                  <div className={`w-14 h-14 ${stat.bgColor} rounded-2xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform`}>
-                    <stat.icon className={`w-7 h-7 ${stat.color.replace('bg-', 'text-')}`} />
-                  </div>
-                  <div className={`flex items-center gap-1 text-sm font-semibold px-3 py-1 rounded-full ${
-                    stat.isPositive ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-                  }`}>
-                    {stat.isPositive ? <ArrowUpRight className="w-4 h-4" /> : <ArrowDownRight className="w-4 h-4" />}
-                    {stat.change}
-                  </div>
-                </div>
-                <div className="mt-5">
-                  <p className="text-gray-500 text-sm font-medium mb-1">{stat.label}</p>
-                  <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
-                </div>
-              </div>
-            ))}
+            <StatCard 
+              icon={Users}
+              label="Total Users"
+              value={stats?.totalUsers || 0}
+              change="+12%"
+              changeType="positive"
+              variant="primary"
+            />
+            <StatCard 
+              icon={Calendar}
+              label="Total Events"
+              value={stats?.totalEvents || 0}
+              change="+8%"
+              changeType="positive"
+              variant="success"
+            />
+            <StatCard 
+              icon={Ticket}
+              label="Total Bookings"
+              value={stats?.totalBookings || 0}
+              change="+23%"
+              changeType="positive"
+              variant="purple"
+            />
+            <StatCard 
+              icon={TrendingUp}
+              label="Revenue"
+              value={`₹${stats?.totalRevenue || 0}`}
+              change="+18%"
+              changeType="positive"
+              variant="warning"
+            />
           </div>
         )}
 
-        {/* Quick Actions for Organizers */}
+        {/* Quick Actions for Organizers - Using new DashboardButton component */}
         {user?.role === 'organizer' && (
-          <div className="grid md:grid-cols-3 gap-6 mb-10">
-            <Link to="/create-event" className="card bg-white/80 backdrop-blur-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 group border border-gray-100 animate-fade-in">
-              <div className="flex items-center gap-5">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
-                  <Plus className="w-8 h-8 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-gray-900 group-hover:text-primary-600 transition-colors">Create Event</h3>
-                  <p className="text-sm text-gray-500">Start a new event</p>
-                </div>
-              </div>
-            </Link>
-            <Link to="/my-bookings" className="card bg-white/80 backdrop-blur-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 group border border-gray-100 animate-fade-in animation-delay-200">
-              <div className="flex items-center gap-5">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
-                  <Ticket className="w-8 h-8 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-gray-900 group-hover:text-green-600 transition-colors">View Bookings</h3>
-                  <p className="text-sm text-gray-500">Manage ticket sales</p>
-                </div>
-              </div>
-            </Link>
-            <Link to="/events" className="card bg-white/80 backdrop-blur-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 group border border-gray-100 animate-fade-in animation-delay-400">
-              <div className="flex items-center gap-5">
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
-                  <Eye className="w-8 h-8 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-gray-900 group-hover:text-purple-600 transition-colors">Browse Events</h3>
-                  <p className="text-sm text-gray-500">Explore all events</p>
-                </div>
-              </div>
-            </Link>
-          </div>
+          <DashboardButtonGrid columns={3} className="mb-10">
+            <DashboardButton
+              to="/create-event"
+              icon={Plus}
+              title="Create Event"
+              description="Start a new event"
+              variant="primary"
+              size="md"
+            />
+            <DashboardButton
+              to="/my-bookings"
+              icon={Ticket}
+              title="View Bookings"
+              description="Manage ticket sales"
+              variant="success"
+              size="md"
+            />
+            <DashboardButton
+              to="/events"
+              icon={Eye}
+              title="Browse Events"
+              description="Explore all events"
+              variant="purple"
+              size="md"
+            />
+          </DashboardButtonGrid>
         )}
 
         {/* My Events */}
