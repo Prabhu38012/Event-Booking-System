@@ -1,7 +1,23 @@
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { Calendar, Ticket, Search, ArrowRight, Star, MapPin, Sparkles, TrendingUp, Users } from 'lucide-react';
+import { 
+  Calendar, 
+  Ticket, 
+  Search, 
+  ArrowRight, 
+  Star, 
+  MapPin, 
+  Sparkles, 
+  TrendingUp, 
+  Users,
+  Music,
+  Trophy,
+  Briefcase,
+  Palette,
+  Theater,
+  MoreHorizontal
+} from 'lucide-react';
 import EventCard from '../components/EventCard';
 import { EventCardSkeleton } from '../components/ui/Skeleton';
 import Button from '../components/ui/Button';
@@ -16,12 +32,12 @@ const Home = () => {
   });
 
   const categories = [
-    { name: 'Music', icon: '🎵', color: 'bg-pink-100 text-pink-600', hoverColor: 'hover:bg-pink-200' },
-    { name: 'Sports', icon: '⚽', color: 'bg-green-100 text-green-600', hoverColor: 'hover:bg-green-200' },
-    { name: 'Conference', icon: '💼', color: 'bg-blue-100 text-blue-600', hoverColor: 'hover:bg-blue-200' },
-    { name: 'Workshop', icon: '🎨', color: 'bg-purple-100 text-purple-600', hoverColor: 'hover:bg-purple-200' },
-    { name: 'Theater', icon: '🎭', color: 'bg-orange-100 text-orange-600', hoverColor: 'hover:bg-orange-200' },
-    { name: 'Other', icon: '✨', color: 'bg-gray-100 text-gray-600', hoverColor: 'hover:bg-gray-200' }
+    { name: 'Music', icon: Music, color: 'bg-pink-100 text-pink-600', hoverColor: 'hover:bg-pink-200', iconBg: 'bg-pink-500' },
+    { name: 'Sports', icon: Trophy, color: 'bg-green-100 text-green-600', hoverColor: 'hover:bg-green-200', iconBg: 'bg-green-500' },
+    { name: 'Conference', icon: Briefcase, color: 'bg-blue-100 text-blue-600', hoverColor: 'hover:bg-blue-200', iconBg: 'bg-blue-500' },
+    { name: 'Workshop', icon: Palette, color: 'bg-purple-100 text-purple-600', hoverColor: 'hover:bg-purple-200', iconBg: 'bg-purple-500' },
+    { name: 'Theater', icon: Theater, color: 'bg-orange-100 text-orange-600', hoverColor: 'hover:bg-orange-200', iconBg: 'bg-orange-500' },
+    { name: 'Other', icon: MoreHorizontal, color: 'bg-gray-100 text-gray-600', hoverColor: 'hover:bg-gray-200', iconBg: 'bg-gray-500' }
   ];
 
   const stats = [
@@ -158,8 +174,8 @@ const Home = () => {
                 className="group p-6 bg-white rounded-2xl hover:shadow-xl transition-all duration-300 text-center border border-gray-100 hover:border-primary-200 animate-fade-in"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className={`w-16 h-16 ${category.color} ${category.hoverColor} rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-sm`}>
-                  {category.icon}
+                <div className={`w-16 h-16 ${category.color} ${category.hoverColor} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300 shadow-sm`}>
+                  <category.icon className="w-8 h-8" />
                 </div>
                 <p className="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors">
                   {category.name}
